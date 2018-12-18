@@ -218,6 +218,16 @@ function handlerUnaryOrUpdate(code,name,value){
         handlerExp(name,value);
     }
 }
+function handlerParamVal(value) {
+    let iter3 = paramValues.keys();let val = iter3.next().value;
+    while(val !== undefined) {
+        if(value.includes(val)){
+            value = value.split(val).join(paramValues.get(val));
+        }
+        val = iter3.next().value;
+    }
+    return value;
+}
 function handlerExp(name,value) {
     value = handlerLocalValue(value);
     let iter2 = globalDS.keys(); let val = iter2.next().value;
@@ -227,6 +237,7 @@ function handlerExp(name,value) {
         }
         val = iter2.next().value;
     }
+    value = handlerParamVal(value);
     if(localValues.has(name)){
         localValues.set(name,value+'');
     }

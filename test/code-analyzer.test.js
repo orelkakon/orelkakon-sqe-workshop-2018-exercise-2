@@ -62,9 +62,9 @@ describe('Examples from site', () => {
             'if ( g+1+y < z ) {     //this line is red\n' +
             'return g + y + z + 0 + 5;\n' +
             '} else if ( g+1+y < z * 2 ) {     //this line is green\n' +
-            'return g + y + z + 0 + g + 5;\n' +
+            'return g + y + z + 0 + 1 + 5;\n' +
             '} else {\n' +
-            'return g + y + z + 0 + z + 5;\n' +
+            'return g + y + z + 0 + 3 + 5;\n' +
             '}\n' +
             '}');
     });
@@ -83,7 +83,7 @@ describe('Examples from site', () => {
             '    return z;\n' +
             '}\n','7,8,9')),'function foo(l, y, z) {\n' +
             'while ( l+1 < z ) {\n' +
-            'z = l+1 + l+1+y * 2 ;\n' +
+            'z = 7+1 + 7+1+8 * 2 ;\n' +
             '}\n' +
             'return z;\n' +
             '}');
@@ -104,8 +104,8 @@ describe('regular function case', () => {
             '                return y;\n' +
             '            }', '2,5,6')), 'function foo(f, y, z) {\n' +
             'while ( f+1+y+f+1+y < f ) {\n' +
-            'f = f+1+y+f+1+y + f+1+y ;\n' +
-            'z = f+1 * 2 ;\n' +
+            'f = 2+1+5+2+1+5 + 2+1+5 ;\n' +
+            'z = 2+1+5+2+1+5 + 2+1+5+1 * 2 ;\n' +
             '}\n' +
             'return y;\n' +
             '}');
@@ -229,7 +229,7 @@ describe('regular function case', () => {
             'return z;\n' +
             '}','1,2,3')),'function TTT(f, y, z) {\n' +
             'while ( f+1 < z ) {\n' +
-            'z = f+1 * 2 ;\n' +
+            'z = 1+1 * 2 ;\n' +
             '}\n' +
             'return z;\n' +
             '}');
@@ -244,9 +244,9 @@ describe('regular function case', () => {
             'return c[1] + f + x + z ;\n' +
             '}','1,2,3')),'function TTT(f, y, z) {\n' +
             'if ( 1 < 2 ) {     //this line is green\n' +
-            'return f[2];\n' +
+            'return 1[2];\n' +
             '}\n' +
-            'return f[1] + f + x + z;\n' +
+            'return 1[1] + f + x + z;\n' +
             '}');
     });
 
@@ -274,6 +274,28 @@ describe('regular function case', () => {
             'return 4;\n' +
             '}');
     });
+
+    it('test 11:', () => {
+        assert.equal(printArr(start('function foo(c){\n' +
+            '  c = c + 2;\n' +
+            '  if(c < 5){\n' +
+            '     return 1;\n' +
+            '  }\n' +
+            '  else if (c == 5){\n' +
+            '     return 4;\n' +
+            '  }\n' +
+            '  return c;\n' +
+            '\n' +
+            '}','2')),'function foo(c) {\n' +
+            'if ( 4 + 2 < 5 ) {     //this line is red\n' +
+            'return 1;\n' +
+            '} else if ( 4 + 2 == 5 ) {     //this line is red\n' +
+            'return 4;\n' +
+            '}\n' +
+            'return 4 + 2;\n' +
+            '}');
+    });
+
 
 });
 

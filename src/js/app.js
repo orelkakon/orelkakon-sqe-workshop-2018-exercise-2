@@ -1,5 +1,5 @@
 import $ from 'jquery';
-import {start,/*parseCode*/} from './code-analyzer';
+import {start/*parseCode*/} from './code-analyzer';
 let fullFunction = '';
 let inputFunction = '';
 let Answer;
